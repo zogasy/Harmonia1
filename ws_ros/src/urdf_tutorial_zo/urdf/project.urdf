@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<robot name="sous_marin">
+  <link name="base_link">
+    <visual>
+      <origin rpy="-1.57075 0.0 0.0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/coque_solide.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+    <!--Panel avant -->
+  <link name="panel_avant_droit">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_to_avant_droit" type="fixed">
+    <parent link="base_link"/>
+    <child link="panel_avant_droit"/>
+    <origin rpy="0 0.0 0" xyz="-0.115 0.177 0.181"/>
+  </joint>
+
+<link name="panel_avant_gauche">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_to_avant_gauche" type="fixed">
+    <parent link="base_link"/>
+    <child link="panel_avant_gauche"/>
+    <origin rpy="0 3.14 0" xyz="0.115 0.177 0.181"/>
+  </joint>
+
+  <!--Panel arriere -->
+
+  <link name="panel_right">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
+      </geometry>
+      <origin rpy="0 0.0 0" xyz="0 0 0.0"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_right" type="fixed">
+    <parent link="base_link"/>
+    <child link="panel_right"/>
+    <origin xyz="-0.095 1.4 0.15"/>
+  </joint>
+
+<link name="panel_left">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
+      </geometry>
+      <origin rpy="0 3.14 0" xyz="0 0 0.0"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_left" type="fixed">
+    <parent link="base_link"/>
+    <child link="panel_left"/>
+    <origin xyz="0.095 1.4 0.15"/>
+  </joint>
+
+        <!--Panel Haut -->
+  <link name="panel_haut">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
+      </geometry>
+      <origin rpy="0 0.0 0" xyz="0 0 0.0"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_haut" type="fixed">
+    <parent link="base_link"/>
+    <child link="panel_haut"/>
+    <origin xyz="0.0 1.4 0.24" rpy ="0.0 1.57075 0.0"/>
+  </joint>
+
+<link name="panel_bas">
+    <visual>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
+      </geometry>
+      <origin rpy="0 3.14 0" xyz="0 0 0.0"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_bas" type="fixed">
+    <parent link="base_link"/>
+    <child link="panel_bas"/>
+    <origin xyz="0.0 1.4 0.055" rpy ="0.0 1.57075 0.0"/>
+  </joint>
+
+
+</robot>
