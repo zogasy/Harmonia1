@@ -7,6 +7,17 @@
         <mesh filename="package://urdf_tutorial_zo/meshes/coque_solide.dae"/>
       </geometry>
     </visual>
+
+    <collision>
+      <origin rpy="-1.57075 0.0 0.0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://urdf_tutorial_zo/meshes/coque_solide.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="50.0"/>
+      <inertia ixx="10.0" ixy="0.0" ixz="0.0" iyy="10.0" iyz="0.0" izz="10.0"/>
+    </inertial>
   </link>
 
     <!--Panel avant -->
@@ -49,14 +60,14 @@
       <geometry>
         <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
       </geometry>
-      <origin rpy="0 0.0 0" xyz="0 0 0.0"/>
+      <origin  xyz="0 0 0.0"/>
     </visual>
   </link>
 
   <joint name="bras_arriere_droit_joint" type="revolute">
     <axis xyz="1 0 0"/>
     <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
-    <origin xyz="-0.095 1.4 0.15"/>
+    <origin xyz="-0.095 1.4 0.15" rpy="0 0.0 0"/>
     <parent link="base_link"/>
     <child link="panel_right"/>
   </joint>
@@ -66,14 +77,15 @@
       <geometry>
         <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
       </geometry>
-      <origin rpy="0 3.14 0" xyz="0 0 0.0"/>
+      <origin rpy="0 0.0 0" xyz="0 0 0.0"/>
     </visual>
   </link>
 
   <joint name="bras_arriere_gauche_joint" type="revolute">
     <axis xyz="1 0 0"/>
     <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
-    <origin xyz="0.095 1.4 0.15"/>
+
+    <origin xyz="0.095 1.4 0.15" rpy="0 3.14 0"/>
     <parent link="base_link"/>
     <child link="panel_left"/>
   </joint>
