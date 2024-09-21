@@ -18,13 +18,15 @@
     </visual>
   </link>
 
-  <joint name="base_to_avant_droit" type="fixed">
+  <joint name="bras_avant_droit_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+    <origin rpy="0 0.0 0" xyz="-0.115 0.177 0.181"/>
     <parent link="base_link"/>
     <child link="panel_avant_droit"/>
-    <origin rpy="0 0.0 0" xyz="-0.115 0.177 0.181"/>
   </joint>
 
-<link name="panel_avant_gauche">
+  <link name="panel_avant_gauche">
     <visual>
       <geometry>
         <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
@@ -32,13 +34,15 @@
     </visual>
   </link>
 
-  <joint name="base_to_avant_gauche" type="fixed">
+  <joint name="bras_avant_gauche_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+    <origin rpy="0 3.14 0" xyz="0.115 0.177 0.181"/>
     <parent link="base_link"/>
     <child link="panel_avant_gauche"/>
-    <origin rpy="0 3.14 0" xyz="0.115 0.177 0.181"/>
   </joint>
 
-  <!--Panel arriere -->
+  <!--Panel arriere horizontales -->
 
   <link name="panel_right">
     <visual>
@@ -49,13 +53,15 @@
     </visual>
   </link>
 
-  <joint name="base_to_right" type="fixed">
+  <joint name="bras_arriere_droit_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+    <origin xyz="-0.095 1.4 0.15"/>
     <parent link="base_link"/>
     <child link="panel_right"/>
-    <origin xyz="-0.095 1.4 0.15"/>
   </joint>
 
-<link name="panel_left">
+  <link name="panel_left">
     <visual>
       <geometry>
         <mesh filename="package://urdf_tutorial_zo/meshes/plane.dae"/>
@@ -64,13 +70,15 @@
     </visual>
   </link>
 
-  <joint name="base_to_left" type="fixed">
+  <joint name="bras_arriere_gauche_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+    <origin xyz="0.095 1.4 0.15"/>
     <parent link="base_link"/>
     <child link="panel_left"/>
-    <origin xyz="0.095 1.4 0.15"/>
   </joint>
 
-        <!--Panel Haut -->
+        <!--Panel arriere verticales -->
   <link name="panel_haut">
     <visual>
       <geometry>
@@ -80,10 +88,12 @@
     </visual>
   </link>
 
-  <joint name="base_to_haut" type="fixed">
+  <joint name="bras_arriere_haut_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+    <origin xyz="0.0 1.4 0.24" rpy ="0.0 1.57075 0.0"/>
     <parent link="base_link"/>
     <child link="panel_haut"/>
-    <origin xyz="0.0 1.4 0.24" rpy ="0.0 1.57075 0.0"/>
   </joint>
 
 <link name="panel_bas">
@@ -95,11 +105,14 @@
     </visual>
   </link>
 
-  <joint name="base_to_bas" type="fixed">
+<joint name="bras_arriere_bas_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+    <origin xyz="0.0 1.4 0.055" rpy ="0.0 1.57075 0.0"/>
     <parent link="base_link"/>
     <child link="panel_bas"/>
-    <origin xyz="0.0 1.4 0.055" rpy ="0.0 1.57075 0.0"/>
   </joint>
+
 
 
 </robot>
