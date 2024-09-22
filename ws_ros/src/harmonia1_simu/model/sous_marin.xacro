@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<robot name="sous_marin" xmlns:xacro="http://ros.org/wiki/xacro">
+
+                <!--Constantes -->
+
+  <xacro:property name="arm_len" value="0.177"/>
+  <xacro:property name="arm_height" value="0.181"/>
+  <xacro:property name="arm_width" value="0.115"/>
+  <xacro:property name="leg_len" value="1.4"/>
+  <xacro:property name="horizontal_radius" value="0.095"/>
+  <xacro:property name="horizontal_heigth" value="0.15"/>
+  <xacro:property name="height_center" value="0.1475"/>
+  <xacro:property name="height_radius" value="0.0925"/>
+
+  <xacro:property name="Pi" value="3.141592"/>
+
+
+     <!--Gazebo File-->
+  <xacro:include filename="$(find harmonia1_simu)/model/sous_marin.gazebo"/>
+        <!-- Macro Xacro inertie -->
+        
+  <xacro:macro name="default_inertial" params="mass">
+    <inertial>
+      <mass value="${mass}"/>
+      <inertia ixx="1e-3" ixy="0.0" ixz="0.0" iyy="1e-3" iyz="0.0" izz="1e-3" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="panel_param">
+    <visual>
+      <geometry>
+        <mesh filename="$(find harmonia1_simu)/meshes/plane.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="$(find harmonia1_simu)/meshes/plane.dae"/>
+      </geometry>
+    </collision>
+
+  </xacro:macro>
+  
+
+  <link name="base_link">
+    <visual>
+      <origin rpy="-${Pi/2} 0.0 0.0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find harmonia1_simu)/meshes/coque_solide_modif.dae"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin rpy="-${Pi/2} 0.0 0.0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find harmonia1_simu)/meshes/coque_solide_modif.dae"/>
+      </geometry>
+    </collision>
+
+    <xacro:default_inertial mass="10"/>
+  </link>
+
+
+  <link name="base_footprint"/>
+    <joint name="body_link_joint" type="fixed">
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+  </joint>
+
+    <!--Panel avant -->
+  <xacro:macro name="Panel_avant" params="prefix reflect"> 
+      <link name="panel_avant_${prefix}">
+        <xacro:panel_param/>
+        <xacro:default_inertial mass="2.0"/>
+      </link>
+      <joint name="joint_avant_${prefix}" type="revolute">
+        <axis xyz="1 0 0"/>
+        <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+        <origin rpy="0 ${Pi*(1+reflect)/2} 0" xyz="${reflect*arm_width} ${arm_len} ${arm_height}"/>
+        <parent link="base_link"/>
+        <child link="panel_avant_${prefix}"/>
+
+        <dynamics damping="0.1" friction="0.05"/>
+
+      </joint>
+  </xacro:macro>
+
+  <xacro:Panel_avant prefix="droite" reflect="-1"/>
+  <xacro:Panel_avant prefix="gauche" reflect="1"/>
+
+  <!--Panel arriere horizontales -->
+  <xacro:macro name="horizontale_panel" params="prefix reflect">
+    <link name="horizontal_back_panel_${prefix}">
+      <xacro:panel_param/>
+      <xacro:default_inertial mass="2.0"/>
+
+    </link>
+
+    <joint name="horizontal_back_panel_joint_${prefix}" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+      <origin xyz="${reflect*horizontal_radius} ${leg_len} ${horizontal_heigth}" rpy="0 ${(1+reflect)*Pi/2} 0"/>
+      <parent link="base_link"/>
+      <child link="horizontal_back_panel_${prefix}"/>
+
+      <dynamics damping="0.1" friction="0.05"/>
+
+    </joint>
+  </xacro:macro>
+
+  <xacro:horizontale_panel prefix="right" reflect ="-1"/>
+  <xacro:horizontale_panel prefix="left" reflect = "1"/>
+
+
+        <!--Panel arriere verticales -->
+
+  <xacro:macro name="vertical_panel" params="prefix reflect">
+    <link name="panel_${prefix}">
+      <xacro:panel_param/>
+      <xacro:default_inertial mass="2.0"/>
+    </link>
+    <joint name="back_panel_joint_${prefix}" type="revolute">
+      <axis xyz="1 0 0"/>
+      <limit effort="1000.0" lower="-0.548" upper="0.548" velocity="0.5"/>
+      <origin xyz="0.0 ${leg_len} ${height_center + reflect*height_radius}" rpy="0 ${reflect*Pi/2} 0"/>
+      <parent link="base_link"/>
+      <child link="panel_${prefix}"/>
+
+      <dynamics damping="0.1" friction="0.05"/>
+
+    </joint>
+  </xacro:macro>
+
+  <xacro:vertical_panel prefix="up" reflect ="1"/>
+  <xacro:vertical_panel prefix="down" reflect = "-1"/>
+</robot>
